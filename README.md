@@ -2,6 +2,8 @@
 Build a Gmail contextual gadget similar (but much simpler) to - https://solve360.com/new/solve360-and-gmail-hook-up/
 
 **Steps to Publish**
+based on this:
+https://github.com/sbrudz/gadget-hello-world
 
 Here are the steps I followed to get this published to the Google Apps Marketplace:
 
@@ -32,8 +34,8 @@ Here are the steps I followed to get this published to the Google Apps Marketpla
     1. Enter configuration info as follows:
       1. Add a description
       1. Add 4 icons of various sizes
-      1. Add a URL for the Terms of Service.  I used: http://sbrudz.github.io/gadget-hello-world/tos.html
-      1. In the extensions section, check the "Universal navigation extension" and enter a URL.  I used: https://github.com/sbrudz/gadget-hello-world
+      1. Add a URL for the Terms of Service.  for example : http://sbrudz.github.io/gadget-hello-world/tos.html
+      1. In the extensions section, check the "Universal navigation extension" and enter a URL.  I used: https://github.com/distributev/gmail-wordpress-mailchimp-integration
       1. Then check the "Gmail contextual gadget extension" with:
         1. **Extractor URL:** google.com:SenderEmailExtractor
         1. **Gadget URL:** http://www.ispa-sa.com/gadget.xml
