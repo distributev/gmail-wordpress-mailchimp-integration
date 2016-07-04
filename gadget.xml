@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+  <ModulePrefs title="freelancer project"
+    description="mdkass Gmail contextual gadgets"
+    height="40"
+    author="mdkass"
+    author_email="..."
+    author_location="SA">
+
+    <!-- Declare feature dependencies. -->
+
+    <!-- This one is not specific to Gmail contextual gadgets. -->
+    <Require feature="dynamic-height"/>
+
+    <!-- The next feature, Caja, is optional, and is supported for
+     use only within test domains. Uncomment the tag only for
+     non-production gadgets. -->
+    <!-- <Require feature="caja"/> -->
+
+    <!-- The next feature, google.contentmatch, is required for all
+     Gmail contextual gadgets.
+     <Param> - specify one or more comma-separated extractor IDs in
+     a param named "extractors". This line is overridden by the extractor ID
+     in the manifest, but is still expected to be present. -->
+    <Require feature="google.contentmatch">
+      <Param name="extractors">
+        google.com:SenderEmailExtractor
+      </Param>
+    </Require>
+
+  </ModulePrefs>
+
+  <!-- Define the content type and display location. The settings
+   "html" and "card" are required for all Gmail contextual gadgets. -->
+  <Content type="html" view="card">
+    <![CDATA[
+      <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+      <style>
+ul.tab {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Float the list items side by side */
+ul.tab li {float: left;}
+
+/* Style the links inside the list items */
+ul.tab li a {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of links on hover */
+ul.tab li a:hover {background-color: #ddd;}
+
+/* Create an active/current tablink class */
+ul.tab li a:focus, .active {background-color: #ccc;}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+      </style>
+      
+ <ul class="tab">
+  <li><a href="#" class="tablinks" onclick="openTab(event, 'WordPress')">Contact Info</a></li>
+  <li><a href="#" class="tablinks" onclick="openTab(event, 'Mailchimp')">Create Event</a></li>
+  
+</ul>
+
+<div id="WordPress" class="tabcontent">
+  <h3>WordPress</h3>
+  
+</div>
+
+<div id="Mailchimp" class="tabcontent">
+  <h3>Mailchimp</h3>
+  <button type="button">Send to MailChimp</button>
+</div>
+
+<p>Ver 32</p>
+      <!-- Start with Single Sign-On -->
+      <!--script type="text/javascript" src="https://example.com/gadgets/sso.js"></script-->
+      
+      <script type="text/javascript">
+function openTab(evt, cityName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the link that opened the tab
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+        <!-- Fetch the array of content matches. -->
+        matches = google.contentmatch.getContentMatches();
+        var matchList = document.createElement('UL');
+        var listItem;
+        var extractedText;
+
+        <!-- Iterate through the array and display output for each match. -->
+        for (var match in matches) {
+          for (var key in matches[match]) {
+            listItem = document.createElement('LI');
+            extractedText = document.createTextNode(key + ": " + matches[match][key]);
+            listItem.appendChild(extractedText);
+            matchList.appendChild(listItem);
+          }
+        }
+        document.body.appendChild(matchList);
+        gadgets.window.adjustHeight(300);
+        console.log("test");
+var getJSON = function(url, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("get", url, true);
+    xhr.responseType = "json";
+    xhr.onload = function() {
+      var status = xhr.status;
+      if (status == 200) {
+        callback(null, xhr.response);
+      } else {
+        callback(status);
+      }
+    };
+    xhr.send();
+};
+
+      getJSON("https://script.google.com/macros/s/AKfycbzdkgpfWPrBUNWd8oe9uFg1KCjSBQjCcLuiCEx6Fcb3MuY2Nko/exec?req=contact&email=",
+function(err, data) {
+  if (err != null) {
+    console.log("Something went wrong: " + err);
+  } else {
+    console.log(data);
+  }
+});
+      </script>
+    ]]>
+  </Content>
+</Module>
