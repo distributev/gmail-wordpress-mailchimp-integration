@@ -11,14 +11,14 @@ Here are the steps I followed to get this published to the Google Apps Marketpla
 
 3.Select the "Google Apps Marketplace SDK" under "Google Apps APIs"
 
-4.On the "Google Apps Marketplace SDK" page:
-  1.Click the "Enable API" button
-  2.Click the "Configuration" tab
-  3.Click the "Create an OAuth 2.0 client ID" link, which will take you to the Credentials page
-5.On the Credentials page:
-  1.Click the "Add credentials" link and choose the "OAuth 2.0 Client ID" option
-  2.Click the "Configure Consent Screen" button
-  3.Fill out the required information and click "Save".
+  1. On the "Google Apps Marketplace SDK" page:
+    1. Click the "Enable API" button
+    1. Click the "Configuration" tab
+    1. Click the "Create an OAuth 2.0 client ID" link, which will take you to the Credentials page
+  1. On the Credentials page:
+    1. Click the "Add credentials" link and choose the "OAuth 2.0 Client ID" option
+    1. Click the "Configure Consent Screen" button
+    1. Fill out the required information and click "Save".
     1. Under "Create client ID", do the following (per [these instructions](https://developers.google.com/api-client-library/javascript/start/start-js)):
       1. Choose Application type = Web application
       1. Enter the name of your app
