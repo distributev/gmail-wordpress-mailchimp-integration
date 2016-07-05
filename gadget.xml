@@ -81,8 +81,23 @@ ul.tab li a:focus, .active {background-color: #ccc;}
 </ul>
 
 <div id="WordPress" class="tabcontent">
-  <h3>WordPress</h3>
   
+  <table><tr>
+  <td id="contact1"></td>  <td id="contact2"></td>
+  </tr></table>
+  <hr>
+  <h5>Contact Info</h5>
+  <table><tr>
+  <td>Some label</td>  <td id="contact3"></td>
+  </tr></table>
+  <hr>
+  <h5>Company Info</h5>
+  <table>
+  <tr><td>Company label 1</td>  <td id="company1"></td></tr>
+  <tr><td>Company label 2</td>  <td id="company2"></td></tr>
+  </table>
+
+
 </div>
 
 <div id="Mailchimp" class="tabcontent">
@@ -90,7 +105,7 @@ ul.tab li a:focus, .active {background-color: #ccc;}
   <button type="button">Send to MailChimp</button>
 </div>
 
-<p>Ver 32</p>
+<p>Ver 38</p>
       <!-- Start with Single Sign-On -->
       <!--script type="text/javascript" src="https://example.com/gadgets/sso.js"></script-->
       
@@ -153,7 +168,14 @@ function(err, data) {
   if (err != null) {
     console.log("Something went wrong: " + err);
   } else {
-    console.log(data);
+     var obj = JSON.parse(data);
+     document.getElementById("contact1").innerHTML = obj['contact_field_1'];
+     document.getElementById("contact2").innerHTML = obj['contact_field_2'];
+     document.getElementById("contact3").innerHTML = obj['contact_field_3'];
+     document.getElementById("company1").innerHTML = obj['company_info']['company_field_1'];
+     document.getElementById("company2").innerHTML = obj['company_info']['company_field_2'];
+     console.log(obj.contact_field_1);
+
   }
 });
       </script>
