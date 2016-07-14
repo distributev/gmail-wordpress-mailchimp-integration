@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Module>
   <ModulePrefs title="freelancer project"
-    description="mdkass Gmail contextual gadgets"
-    height="40"
+    description="mdkass Gmail contextual gadgets v"
+    height="300"
     author="mdkass"
     author_email="..."
     author_location="SA">
@@ -34,7 +34,7 @@
    "html" and "card" are required for all Gmail contextual gadgets. -->
   <Content type="html" view="card">
     <![CDATA[
-      <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+      
       <style>
 ul.tab {
     list-style-type: none;
@@ -101,15 +101,62 @@ ul.tab li a:focus, .active {background-color: #ccc;}
 </div>
 
 <div id="Mailchimp" class="tabcontent">
-  <h3>Mailchimp</h3>
-  <button type="button">Send to MailChimp</button>
+  <table>
+<tr>
+<td align="right"><label for="select1">Type:</label></td>
+<td><select id="eventType">
+  <option value="type1">Type 1</option>
+  <option value="type2">Type 2</option>
+  <option value="type3">Type 3</option>
+</select></td>
+</tr>
+<tr></tr>
+
+</br>
+</br>
+<tr><td align="right"><label for="desc">Description:</label></td><td><input id="desc" value="Description for type 1"></input></td></tr>
+<tr><td align="right"><label for="notes">Notes:</label></td><td><textarea id="notes">Notes for type 1</textarea></td></tr>
+<tr><td align="right"><label for="eventdate">Date:</label></td><td><input id="eventdate" type="date"></input></td></tr>
+<tr><td align="right"></td><td><input id="sendemail" type="checkbox" value="true">Send Email</input></td></tr>
+</table>
+
+  <button type="button" onclick="saveEvent()">Save</button>
 </div>
 
-<p>Ver 38</p>
+<p>Ver 52</p>
       <!-- Start with Single Sign-On -->
-      <!--script type="text/javascript" src="https://example.com/gadgets/sso.js"></script-->
       
-      <script type="text/javascript">
+      <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+      <!--script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js></script-->
+      <script type="text/javascript" src="./javascript.js"></script>     
+      <script>
+console.log("onchange begin");
+
+$('#eventType').on('change', function() {
+ 
+  var typ = document.getElementById('eventType');
+  var ds = document.getElementById('desc');
+  var nt = document.getElementById('notes');
+  
+  if (typ.value == 'type1'){
+    ds.value = 'Description for type 1';
+    nt.value = 'Notes for type 1';
+    
+  }else if (typ.value == 'type2'){
+    ds.value = 'Description for type 2';
+    nt.value = 'Notes for type 2';
+  
+  }else if (typ.value == 'type3'){
+    ds.value = 'Description for type 3';
+    nt.value = 'Notes for type 3';
+
+  }
+  //var ta = document.getElementById('desc');
+    //ds.value =  typ.value;
+})
+
+
+
 function openTab(evt, cityName) {
     // Declare all variables
     var i, tabcontent, tablinks;
@@ -147,13 +194,17 @@ function openTab(evt, cityName) {
         }
         document.body.appendChild(matchList);
         gadgets.window.adjustHeight(300);
-        console.log("test");
+        
 var getJSON = function(url, callback) {
+    console.log("getJSON url:"+url);
     var xhr = new XMLHttpRequest();
     xhr.open("get", url, true);
     xhr.responseType = "json";
     xhr.onload = function() {
       var status = xhr.status;
+      console.log(xhr.response);
+      console.log(status);
+
       if (status == 200) {
         callback(null, xhr.response);
       } else {
@@ -162,6 +213,31 @@ var getJSON = function(url, callback) {
     };
     xhr.send();
 };
+
+function saveEvent(){
+  // https://script.google.com/macros/s/AKfycbzdkgpfWPrBUNWd8oe9uFg1KCjSBQjCcLuiCEx6Fcb3MuY2Nko/exec?req=event&email=&etype=&desc=&notes=&edate=&sendemail=
+
+  var email = matches[0]['sender_email'];
+  var typ = document.getElementById('eventType').value;
+  var ds = document.getElementById('desc').value;
+  var nt = document.getElementById('notes').value;
+  var dt = document.getElementById('eventdate').value;
+  var se = document.getElementById('sendemail').value;
+  if (se){var sendemail = 1}else{var sendemail =0}
+  var url = "https://script.google.com/macros/s/AKfycbzdkgpfWPrBUNWd8oe9uFg1KCjSBQjCcLuiCEx6Fcb3MuY2Nko/exec?"; 
+  url = url + "req=event&email="+email+"&etype="+typ+"&desc="+ds+"&notes="+nt+"&edate="+dt+"&sendemail="+sendemail;
+  url = encodeURI(url); 
+  getJSON(url,
+  function(err, data) {
+  if (err != null) {
+   console.log("Something went wrong: " + err);
+  } else {
+     var obj = JSON.parse(data);
+
+  }
+}); 
+ 
+}
 
       getJSON("https://script.google.com/macros/s/AKfycbzdkgpfWPrBUNWd8oe9uFg1KCjSBQjCcLuiCEx6Fcb3MuY2Nko/exec?req=contact&email=",
 function(err, data) {
@@ -174,7 +250,7 @@ function(err, data) {
      document.getElementById("contact3").innerHTML = obj['contact_field_3'];
      document.getElementById("company1").innerHTML = obj['company_info']['company_field_1'];
      document.getElementById("company2").innerHTML = obj['company_info']['company_field_2'];
-     console.log(obj.contact_field_1);
+     //console.log(obj.contact_field_1);
 
   }
 });
