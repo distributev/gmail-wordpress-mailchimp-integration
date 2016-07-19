@@ -59,6 +59,10 @@ Here are the steps I followed to get this published to the Google Apps Marketpla
 **Part2: The WordPress Part**
 
 1.Install all plugins listed in the WpPlugins.png screenshot with exact versions and Wp-Rollback will help you to find the required version of each plugin. 
+
 2.Define the Event pod with exact fields as WpPods.png
+
 3.Change the .htaccess file in your wordpress website like the .htaccess file that exists in this project.
+
 4.Add the php code that exists in the file newEndpoint.php in the wp-router/wp-router.php that comes with the wp-router.php
+
