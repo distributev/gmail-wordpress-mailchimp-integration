@@ -56,3 +56,9 @@ Here are the steps I followed to get this published to the Google Apps Marketpla
   1. Log into gmail with the clear gadget cache option set: https://mail.google.com/mail/u/0/?nogadgetcache=1
   1. Check that the gadget has been installed by clicking the "Google Apps" button in the upper right corner of Gmail and scrolling down in the resulting popup menu.
 
+**Part2: The WordPress Part**
+
+1.Install all plugins listed in the WpPlugins.png screenshot with exact versions and Wp-Rollback will help you to find the required version of each plugin. 
+2.Define the Event pod with exact fields as WpPods.png
+3.Change the .htaccess file in your wordpress website like the .htaccess file that exists in this project.
+4.Add the php code that exists in the file newEndpoint.php in the wp-router/wp-router.php that comes with the wp-router.php
