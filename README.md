@@ -66,3 +66,13 @@ Here are the steps I followed to get this published to the Google Apps Marketpla
 
 4.Add the php code that exists in the file newEndpoint.php in the wp-router/wp-router.php that comes with the wp-router.php
 
+
+**Part3: The Google Apps script part**
+
+1.From Google Drive click **New** Button, then click More -> Google Apps Script if not found in the menu click **Connect more Apps** and find it. 
+1.When opening the new apps script file rename it with apropriate name and copy and paste code from "Gadget Helper.gs" file that exists with this project.
+1.from Menu-> Deploy as wep app set options : **Execute the app as:** = "Me" and **Who has access to the app:** = "Anyone even anonymous" Click "Deploy" or "Update" then copy the Current web app URL 
+1.This wep app URL should be replaced in line 227 and line 242 "everything before the -?- mark" in the Gadget.xml file
+
+
+
