@@ -1,7 +1,12 @@
 # gmail-wordpress-mailchimp-integration
 Build a Gmail contextual gadget similar (but much simpler) to - https://solve360.com/new/solve360-and-gmail-hook-up/
+There are 3 parts to do the Gmail contextual gadget 
+**Part1: The Google Apps Marketplace SDK Part**
+
 
 **Steps to Publish**
+
+
 based on this:
 https://github.com/sbrudz/gadget-hello-world
 
