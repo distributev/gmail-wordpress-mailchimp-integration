@@ -224,8 +224,8 @@ function saveEvent(){
   var dt = document.getElementById('eventdate').value;
   var se = document.getElementById('sendemail').value;
   if (se){var sendemail = 1}else{var sendemail =0}
-  var url = "https://script.google.com/macros/s/AKfycbzdkgpfWPrBUNWd8oe9uFg1KCjSBQjCcLuiCEx6Fcb3MuY2Nko/exec?"; 
-  url = url + "req=event&email="+email+"&etype="+typ+"&desc="+ds+"&notes="+nt+"&edate="+dt+"&sendemail="+sendemail;
+  var url = "https://script.google.com/macros/s/AKfycbzdkgpfWPrBUNWd8oe9uFg1KCjSBQjCcLuiCEx6Fcb3MuY2Nko/exec"; 
+  url = url + "?req=event&email="+email+"&etype="+typ+"&desc="+ds+"&notes="+nt+"&edate="+dt+"&sendemail="+sendemail;
   url = encodeURI(url); 
   getJSON(url,
   function(err, data) {
