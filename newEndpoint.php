@@ -24,6 +24,7 @@ class ContactInfo {
     public $contact_field_1 ;
     public $contact_field_2 ;
     public $contact_field_3 ;
+    public $email;
 
     /**
      * @var This is of type CompanyInfo
@@ -58,7 +59,8 @@ function contact_callback( $argument ) {
 	$contactInfo->contact_field_1 = 'Contact Value 1';
 	$contactInfo->contact_field_2 = "Contact Value 2";
 	$contactInfo->contact_field_3 = "Contact Value 3";
-	
+	$contactInfo->email = $argument;
+
 	//2. Populate Company Info
         $contactInfo->company_info = new CompanyInfo();
 	$contactInfo->company_info->company_field_1 = "Company Value 1";
@@ -70,4 +72,3 @@ function contact_callback( $argument ) {
 		
 	//	echo '<p>This page helpfully tells you the value of the <code>sample_argument</code> query variable: //'.esc_html($argument).'</p>';
 	}
-
