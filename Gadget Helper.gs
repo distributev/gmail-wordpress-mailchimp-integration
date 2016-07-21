@@ -57,7 +57,7 @@ function newEvent(eventType,desc,notes,eventDate,sendemail,email){
 
 
 function getwpContact(email) {
-  var um_url = 'http://test.ispa-sa.com/wp/wp-json/wp/v2/ContactInfo';
+  var um_url = 'http://mdkass.ispa-sa.com/contact/'+email;
   var um_headers = {};
 
   var um_options = {  
