@@ -74,13 +74,13 @@ ul.tab li a:focus, .active {background-color: #ccc;}
 }
       </style>
       
- <ul class="tab">
-  <li><a href="#" class="tablinks" onclick="openTab(event, 'WordPress')">Contact Info</a></li>
-  <li><a href="#" class="tablinks" onclick="openTab(event, 'Mailchimp')">Create Event</a></li>
+ <ul class="tab" tabindex="0">
+  <li tabindex="-1" id="focusableElement"><a href="#" class="tablinks" onclick="openTab(event, 'Contact')">Contact Info</a></li>
+  <li><a href="#" class="tablinks" onclick="openTab(event, 'Event')">Create Event</a></li>
   
 </ul>
 
-<div id="WordPress" class="tabcontent">
+<div id="Contact" class="tabcontent">
   
   <table><tr>
   <td id="contact1"></td>  <td id="contact2"></td>
@@ -100,7 +100,7 @@ ul.tab li a:focus, .active {background-color: #ccc;}
 
 </div>
 
-<div id="Mailchimp" class="tabcontent">
+<div id="Event" class="tabcontent">
   <table>
 <tr>
 <td align="right"><label for="select1">Type:</label></td>
@@ -123,7 +123,7 @@ ul.tab li a:focus, .active {background-color: #ccc;}
   <button type="button" onclick="saveEvent()">Save</button>
 </div>
 
-<p>Ver 52</p>
+<p>Ver 56</p>
       <!-- Start with Single Sign-On -->
       
       <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
@@ -157,7 +157,7 @@ $('#eventType').on('change', function() {
 
 
 
-function openTab(evt, cityName) {
+function openTab(evt, tabName) {
     // Declare all variables
     var i, tabcontent, tablinks;
 
@@ -174,7 +174,7 @@ function openTab(evt, cityName) {
     }
 
     // Show the current tab, and add an "active" class to the link that opened the tab
-    document.getElementById(cityName).style.display = "block";
+    document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
 }
         <!-- Fetch the array of content matches. -->
@@ -195,6 +195,11 @@ function openTab(evt, cityName) {
         document.body.appendChild(matchList);
         gadgets.window.adjustHeight(300);
         
+        var mybtn = document.getElementsByClassName("tablinks")[0];
+        mybtn.click();
+        mybtn.focus();
+        //openTab(null, 'Contact');
+
 var getJSON = function(url, callback) {
     console.log("getJSON url:"+url);
     var xhr = new XMLHttpRequest();
@@ -224,8 +229,8 @@ function saveEvent(){
   var dt = document.getElementById('eventdate').value;
   var se = document.getElementById('sendemail').value;
   if (se){var sendemail = 1}else{var sendemail =0}
-  var url = "https://script.google.com/macros/s/AKfycbzdkgpfWPrBUNWd8oe9uFg1KCjSBQjCcLuiCEx6Fcb3MuY2Nko/exec"; 
-  url = url + "?req=event&email="+email+"&etype="+typ+"&desc="+ds+"&notes="+nt+"&edate="+dt+"&sendemail="+sendemail;
+  var url = "https://script.google.com/macros/s/AKfycbzdkgpfWPrBUNWd8oe9uFg1KCjSBQjCcLuiCEx6Fcb3MuY2Nko/exec?"; 
+  url = url + "req=event&email="+email+"&etype="+typ+"&desc="+ds+"&notes="+nt+"&edate="+dt+"&sendemail="+sendemail;
   url = encodeURI(url); 
   getJSON(url,
   function(err, data) {
@@ -238,8 +243,8 @@ function saveEvent(){
 }); 
  
 }
-
-      getJSON("https://script.google.com/macros/s/AKfycbzdkgpfWPrBUNWd8oe9uFg1KCjSBQjCcLuiCEx6Fcb3MuY2Nko/exec?req=contact&email=",
+      var email = matches[0]['sender_email'];
+      getJSON("https://script.google.com/macros/s/AKfycbzdkgpfWPrBUNWd8oe9uFg1KCjSBQjCcLuiCEx6Fcb3MuY2Nko/exec?req=contact&email="+email,
 function(err, data) {
   if (err != null) {
     console.log("Something went wrong: " + err);
