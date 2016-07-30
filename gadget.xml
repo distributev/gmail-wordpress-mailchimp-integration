@@ -117,13 +117,13 @@ ul.tab li a:focus, .active {background-color: #ccc;}
 <tr><td align="right"><label for="desc">Description:</label></td><td><input id="desc" value="Description for type 1"></input></td></tr>
 <tr><td align="right"><label for="notes">Notes:</label></td><td><textarea id="notes">Notes for type 1</textarea></td></tr>
 <tr><td align="right"><label for="eventdate">Date:</label></td><td><input id="eventdate" type="date"></input></td></tr>
-<tr><td align="right"></td><td><input id="sendemail" type="checkbox" value="true">Send Email</input></td></tr>
+<tr><td align="right"></td><td><input id="sendEmail" type="checkbox" value="true">Send Email</input></td></tr>
 </table>
 
   <button type="button" onclick="saveEvent()">Save</button>
 </div>
 
-<p>Ver 56</p>
+<p>Ver 57</p>
       <!-- Start with Single Sign-On -->
       
       <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
@@ -220,17 +220,17 @@ var getJSON = function(url, callback) {
 };
 
 function saveEvent(){
-  // https://script.google.com/macros/s/AKfycbzdkgpfWPrBUNWd8oe9uFg1KCjSBQjCcLuiCEx6Fcb3MuY2Nko/exec?req=event&email=&etype=&desc=&notes=&edate=&sendemail=
+  // https://script.google.com/macros/s/AKfycbzdkgpfWPrBUNWd8oe9uFg1KCjSBQjCcLuiCEx6Fcb3MuY2Nko/exec?req=event&email=&etype=&desc=&notes=&edate=&sendEmail=
 
   var email = matches[0]['sender_email'];
   var typ = document.getElementById('eventType').value;
   var ds = document.getElementById('desc').value;
   var nt = document.getElementById('notes').value;
   var dt = document.getElementById('eventdate').value;
-  var se = document.getElementById('sendemail').value;
-  if (se){var sendemail = 1}else{var sendemail =0}
+  var se = document.getElementById('sendEmail').value;
+  if (se){var sendEmail = 1}else{var sendEmail =0}
   var url = "https://script.google.com/macros/s/AKfycbzdkgpfWPrBUNWd8oe9uFg1KCjSBQjCcLuiCEx6Fcb3MuY2Nko/exec?"; 
-  url = url + "req=event&email="+email+"&etype="+typ+"&desc="+ds+"&notes="+nt+"&edate="+dt+"&sendemail="+sendemail;
+  url = url + "req=event&email="+email+"&etype="+typ+"&desc="+ds+"&notes="+nt+"&edate="+dt+"&sendEmail="+sendEmail;
   url = encodeURI(url); 
   getJSON(url,
   function(err, data) {
@@ -238,7 +238,7 @@ function saveEvent(){
    console.log("Something went wrong: " + err);
   } else {
      var obj = JSON.parse(data);
-
+     console.log(obj);
   }
 }); 
  
