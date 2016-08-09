@@ -1,5 +1,21 @@
 // https://script.google.com/macros/s/AKfycbzdkgpfWPrBUNWd8oe9uFg1KCjSBQjCcLuiCEx6Fcb3MuY2Nko/exec?req=contact&email=
 // https://script.google.com/macros/s/AKfycbzdkgpfWPrBUNWd8oe9uFg1KCjSBQjCcLuiCEx6Fcb3MuY2Nko/exec?req=event&email=&etype=&desc=&notes=&edate=&sendEmail=
+// The link of the log spreadsheet. 
+//https://docs.google.com/spreadsheets/d/1_xUj5zizYTjrmP5xv2ZjMIV2C54Wjmd6uPcZMN4cOIY/edit?usp=sharing
+
+var ssID = '1_xUj5zizYTjrmP5xv2ZjMIV2C54Wjmd6uPcZMN4cOIY'; //id of the log spreadsheet
+
+//report log info to a google spreadsheet. 
+function addLog(type,message){
+  var ss = SpreadsheetApp.openById(ssID);   
+  var sheet = ss.getSheetByName('logs');
+  
+  sheet.insertRowAfter(1);
+  var range = sheet.getRange(2, 1, 1, 3);
+  var d = Utilities.formatDate(new Date(),'GMT','yyyy-MM-dd HH:mm:ss')
+  range.setValues([[type,message,d]]);
+}
+
 
 function doGet(e){
   var req = e.parameter.req;
@@ -25,55 +41,55 @@ function doGet(e){
     .setMimeType(ContentService.MimeType.JSON);
 }
 
+// use this to test the saveEvent function 
+function testSaveEvent(){
+  saveEvent('test Event','description for test','notes','08/08/2016',1,'mohammad.kassoumeh@hotmail.com');
 
-function saveEvent(eventType,desc,notes,eventDate,sendEmail,email){
-  var um_url = 'http://mdkass.ispa-sa.com/wp-json/pods/event';
-  var um_headers = {"Authorization":"Basic "+Utilities.base64Encode("mdkass:Su7@n2014")};
-                     
-  var um_options = {  
-  "method":"POST",     
-  "headers": um_headers,
-  "payload":{"title":"created from Google gadget",
-             "status":"Publish",
-             "etype":eventType,"description":desc,"notes":notes,"edate":eventDate},
-  "muteHttpExceptions":true
-           }
-     
- 
-  
-    var um_response = UrlFetchApp.fetch(um_url, um_options);
-    var json = um_response.getContentText();
-    if (sendEmail == 1){
-      MailApp.sendEmail(email, "New Event Created", "Event type:"+eventType+"\n"+
-                                                    "Description:"+desc+"\n"+  
-                                                    "Notes:"+notes+"\n"+  
-                                                    "Date:"+eventDate+"\n");
-    }
-    Logger.log(json);
- }
-
-
-function setwpContact(email) {
-  var um_url = 'http://test.ispa-sa.com/wp/wp-json/wp/v2/mk/172';
-  var um_headers = {"Authorization":"Basic "+Utilities.base64Encode("mdkass:Su7@n2014")};
-                     
-  var um_options = {  
-  "method":"POST",     
-  "headers": um_headers,
-  "payload":{"title":"Final test","status":"publish",'amount':'1000'},
-  "muteHttpExceptions":true
-           }
-     
- 
-  
-    var um_response = UrlFetchApp.fetch(um_url, um_options);
-    var json = um_response.getContentText();
-    
-    Logger.log(json);
- 
-  
 }
 
+
+function saveEvent(eventType,desc,notes,eventDate,sendEmail,email){
+  try{
+    var um_url = 'http://mdkass.ispa-sa.com/wp-json/pods/event';
+    var um_headers = {"Authorization":"Basic "+Utilities.base64Encode("user:password")};
+    //put your Wordpress user and password here
+                       
+    var um_options = {  
+    "method":"POST",     
+    "headers": um_headers,
+    "payload":{"title":"created from Google gadget",
+               "status":"Publish",
+               "etype":eventType,"description":desc,"notes":notes,"edate":eventDate},
+    "muteHttpExceptions":true
+             }
+       
+   
+    
+      var um_response = UrlFetchApp.fetch(um_url, um_options);
+      var json = um_response.getContentText();
+      if (sendEmail == 1){
+        MailApp.sendEmail(email, "New Event Created", "Event type:"+eventType+"\n"+
+                                                      "Description:"+desc+"\n"+  
+                                                      "Notes:"+notes+"\n"+  
+                                                      "Date:"+eventDate+"\n");
+      }
+      Logger.log(json);
+      addLog('Info','saveEvent responce: '+json); // an example how to use addLog function
+   }catch (e) {
+     Logger.log(e.message + "-" + e.lineNumber);
+     addLog('Error','saveEvent: '+eventType+'  '+e.message + "-" + e.lineNumber);
+     // another example how to use addLog function
+   
+   
+   }
+}
+
+
+
+
+function test(){
+  Logger.log(getContactDetails('mdkass@gmail.com'));
+}
 
 function getContactDetails(email) {
   var um_url = 'http://mdkass.ispa-sa.com/contact/'+email;
