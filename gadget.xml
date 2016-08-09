@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <Module>
   <ModulePrefs title="freelancer project"
@@ -73,6 +72,44 @@ ul.tab li a:focus, .active {background-color: #ccc;}
     border: 1px solid #ccc;
     border-top: none;
 }
+.info {
+    width:200px;
+    height:20px;
+    height:auto;
+    position:absolute;
+    left:50%;
+    margin-left:-100px;
+    bottom:10px;
+    background-color: #6B8E23;
+    color: #F0F0F0;
+    font-family: Calibri;
+    font-size: 20px;
+    padding:10px;
+    text-align:center;
+    border-radius: 2px;
+    -webkit-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+    -moz-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+    box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+}
+.wait {
+    width:200px;
+    height:20px;
+    height:auto;
+    position:absolute;
+    left:50%;
+    margin-left:-100px;
+    bottom:10px;
+    background-color: #808080;
+    color: #F0F0F0;
+    font-family: Calibri;
+    font-size: 20px;
+    padding:10px;
+    text-align:center;
+    border-radius: 2px;
+    -webkit-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+    -moz-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+    box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+}
       </style>
       
  <ul class="tab" tabindex="0">
@@ -124,7 +161,9 @@ ul.tab li a:focus, .active {background-color: #ccc;}
   <button type="button" onclick="saveEvent()">Save</button>
 </div>
 
-<p>Ver 58</p>
+<p>Ver 61</p>
+<div id='einfo' class='info' style='display:none'>Event Saved!</div>
+<div id='ewait' class='wait' style='display:none'>Saving Event, Please Wait...</div>
       <!-- Start with Single Sign-On -->
       
       <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
@@ -197,6 +236,7 @@ function openTab(evt, tabName) {
         var mybtn = document.getElementsByClassName("tablinks")[0];
         mybtn.click();
         mybtn.focus();
+        document.getElementById("eventdate").valueAsDate = new Date();
         //openTab(null, 'Contact');
 
 var getJSON = function(url, callback) {
@@ -220,12 +260,13 @@ var getJSON = function(url, callback) {
 
 function saveEvent(){
   // https://script.google.com/macros/s/AKfycbzdkgpfWPrBUNWd8oe9uFg1KCjSBQjCcLuiCEx6Fcb3MuY2Nko/exec?req=event&email=&etype=&desc=&notes=&edate=&sendEmail=
-
+  $('.wait').stop().fadeIn(400).delay(3000).fadeOut(400);
   var email = matches[0]['sender_email'];
   var typ = document.getElementById('eventType').value;
   var ds = document.getElementById('desc').value;
   var nt = document.getElementById('notes').value;
   var dt = document.getElementById('eventdate').value;
+  console.log(dt);
   var se = document.getElementById('sendEmail').value;
   if (se){var sendEmail = 1}else{var sendEmail =0}
   var url = "https://script.google.com/macros/s/AKfycbzdkgpfWPrBUNWd8oe9uFg1KCjSBQjCcLuiCEx6Fcb3MuY2Nko/exec?"; 
@@ -239,6 +280,8 @@ function saveEvent(){
      var obj = JSON.parse(data);
      console.log(obj);
   }
+  $('.info').stop().fadeIn(400).delay(3000).fadeOut(400);
+  //document.getElementById('einfo').stop().fadeIn(400).delay(3000).fadeOut(400);
 }); 
  
 }
