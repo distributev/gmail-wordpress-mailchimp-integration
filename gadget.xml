@@ -110,6 +110,11 @@ ul.tab li a:focus, .active {background-color: #ccc;}
     -moz-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
     box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
 }
+table, th, td {
+    border: 1px solid white;
+    border-collapse: collapse;
+}
+table#mctable {border: 1px solid black;}
       </style>
       
  <ul class="tab" tabindex="0">
@@ -134,6 +139,18 @@ ul.tab li a:focus, .active {background-color: #ccc;}
   <tr><td>Company label 1</td>  <td id="company1"></td></tr>
   <tr><td>Company label 2</td>  <td id="company2"></td></tr>
   </table>
+  <hr>
+  <h5>Mailchimp Info</h5>
+  <table id="mctable">
+    <tr>
+      <th>Campaign Name</th>
+      <th>Email</th>
+      <th>Sent On</th>
+      <th>Opened</th>
+      <th>Clicked</th>
+    </tr>
+  </table>
+  
 
 
 </div>
@@ -161,7 +178,7 @@ ul.tab li a:focus, .active {background-color: #ccc;}
   <button type="button" onclick="saveEvent()">Save</button>
 </div>
 
-<p>Ver 61</p>
+<p>Ver 66</p>
 <div id='einfo' class='info' style='display:none'>Event Saved!</div>
 <div id='ewait' class='wait' style='display:none'>Saving Event, Please Wait...</div>
       <!-- Start with Single Sign-On -->
@@ -300,6 +317,31 @@ function(err, data) {
      //console.log(obj.contact_field_1);
 
   }
+  
+  
+});
+getJSON("https://script.google.com/macros/s/AKfycbzdkgpfWPrBUNWd8oe9uFg1KCjSBQjCcLuiCEx6Fcb3MuY2Nko/exec?req=mc&email="+email,
+function(err, data) {
+  if (err != null) {
+    console.log("Something went wrong: " + err);
+  } else {
+     
+     var mcres = data["result"];
+     for (var i=0; i<mcres.length; i++){
+       var row = '<tr>';
+       row = row + '<td>' + mcres[i]["name"] + '</td>'; 
+       row = row + '<td>' + mcres[i]["to_email"] + '</td>'; 
+       row = row + '<td>' + mcres[i]["sent_on"] + '</td>'; 
+       row = row + '<td>' + mcres[i]["opened"] + '</td>'; 
+       row = row + '<td>' + mcres[i]["clicked"] + '</td>'; 
+       row = row + '</tr>';
+       $('#mctable > tbody:last-child').append(row);
+     }
+     
+
+  }
+  
+  
 });
       </script>
     ]]>
